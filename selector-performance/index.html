@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complex HTML Document for CSS Profiling</title>
+  <style>
+    .benchmark {
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+    }
+
+    .benchmark h2 {
+      margin: 0;
+    }
+    
+    .benchmark ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .benchmark li dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="benchmark">
+    <h2>Selector Benchmark</h2>
+    <ul>
+      <li id="query1">
+        <dl>
+          <dt>Selector</dt>
+          <dd><code>li *</code></dd>
+          <dt>Queries per second</dt>
+          <dd class="result"></dd>
+        </dl>
+      </li>
+      <li id="query2">
+        <dl>
+          <dt>Selector</dt>
+          <dd><code>li a</code></dd>
+          <dt>Queries per second</dt>
+          <dd class="result"></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+
+  <header>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <div class="container">
+      <div class="header">
+        <h1>Welcome to Our Website</h1>
+      </div>
+      <div class="content">
+        <article>
+          <h2>Latest News</h2>
+          <p>This is a sample paragraph with some <span class="highlight">highlighted text</span> for profiling CSS
+            selectors.</p>
+        </article>
+        <article>
+          <h2>Upcoming Events</h2>
+          <p>Another paragraph with an <a href="https://example.com" data-type="info">external link</a> to demonstrate
+            attribute selectors.</p>
+        </article>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p>Column 1 content goes here.</p>
+        </div>
+        <div class="col">
+          <p>Column 2 content goes here.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside id="sidebar">
+    <h2>Sidebar</h2>
+    <p>Additional content for the sidebar, which may include links, ads, or other resources.</p>
+  </aside>
+
+  <footer>
+    <ul class="footer-menu">
+      <li><a href="#privacy">Privacy Policy</a></li>
+      <li><a href="#terms">Terms of Service</a></li>
+    </ul>
+  </footer>
+
+  <div class="box">
+    <p>This is a box with a border.</p>
+  </div>
+  <div class="note">
+    <p>This is a note that appears after the box, demonstrating the sibling combinator (~).</p>
+  </div>
+
+  <script>
+    function benchmarkSelector(selector, iterations = 1000) {
+      // Warm-up phase: query once to avoid initial load time affecting results
+      document.querySelector(selector);
+
+      // Start timing
+      const start = performance.now();
+
+      // Run the selector multiple times
+      for (let i = 0; i < iterations; i++) {
+        document.querySelector(selector);
+      }
+
+      // End timing
+      const end = performance.now();
+
+      const timeTaken = end - start; // Time in milliseconds
+      const queriesPerSecond = (iterations / timeTaken) * 1000; // Convert to queries per second
+      return new Intl.NumberFormat().format(Math.round(queriesPerSecond));
+    }
+
+    document.querySelector('#query1 .result').textContent = benchmarkSelector('li *');
+    document.querySelector('#query2 .result').textContent = benchmarkSelector('li a');
+  </script>
+</body>
+
+</html>
