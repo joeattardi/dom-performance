@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complex HTML Document for CSS Profiling</title>
+</head>
+
+<body>
+  <h1>Adding Child Content</h1>
+  <p>This compares the performance difference between adding 1,000 list items in succession using <code>innerHTML</code> vs. creating child nodes and adding them by calling <code>appendChild</code>.</p>
+  <p>Click each button to see the results.</p>
+
+  <button id="innerHTMLButton">Add items with innerHTML</button>
+  <button id="appendButton">Add items with appendChild</button>
+  <h2>Results</h2>
+  <ul id="results"></ul>
+  <h2>List</h2>
+  <ul id="list"></ul>
+
+  <script>
+    const results = document.querySelector('#results');
+    const list = document.querySelector('#list');
+    const innerHTMLButton = document.querySelector('#innerHTMLButton');
+    innerHTMLButton.addEventListener('click', () => {
+      list.replaceChildren();
+      const start = performance.now();
+
+      for (let i = 0; i < 1000; i++) {
+        list.innerHTML += `<li>Item ${i}`;
+      }
+
+      const end = performance.now();
+      const time = end - start;
+
+      const result = document.createElement('li');
+      result.textContent = `Using innerHTML: ${time}ms`;
+      results.appendChild(result);
+    });
+
+    const appendButton = document.querySelector('#appendButton');
+    appendButton.addEventListener('click', () => {
+      list.replaceChildren();
+      const start = performance.now();
+
+      for (let i = 0; i < 1000; i++) {
+        const item = document.createElement('li');
+        item.textContent = `Item ${i}`;
+        list.appendChild(item);
+      }
+
+      const end = performance.now();
+      const time = end - start;
+      const result = document.createElement('li');
+      result.textContent = `Using appendChild: ${time}ms`;
+      results.appendChild(result);
+    });
+  </script>
+</body>
+
+</html>

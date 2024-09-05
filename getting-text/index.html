@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Text</title>
+  <style>
+    #item2 {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Getting Text</h1>
+
+  <p>This compares the difference between using <code>innerText</code> and <code>textContent</code> for getting the text inside an element. Open the console to see the output.</p>
+
+  <p>There are three list items, but Item 2 is hidden with CSS.</p>
+
+  <ul id="list">
+    <li id="item1">Item 1</li>
+    <li id="item2">Item 2</li>
+    <li id="item3">Item 3</li>
+  </ul>
+
+  <script>
+    const list = document.querySelector('#list');
+    console.log('Using innerText:', list.innerText);
+    console.log('Using textContent:', list.textContent);
+  </script>
+  
+</body>
+
+</html>

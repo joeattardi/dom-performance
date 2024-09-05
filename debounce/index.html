@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Debouncing</title>
+</head>
+
+<body>
+  <h1>Event Debouncing</h1>
+  <p>
+    This compares the difference between an event listener that fires every time, and a debounced event listener.
+    Open the console, then type a query in each field to see the differences in the output.
+  </p>
+
+  <h2>With Debouncing</h2>
+  <input id="debounce" placeholder="Enter some text...">
+
+  <h2>Without Debouncing</h2>
+  <input id="no-debounce" placeholder="Enter some text...">
+
+  <script>
+    function debounce(func, delay = 500) {
+      let timeoutId;
+
+      return function (...args) {
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    }
+
+    document.querySelector('#debounce').addEventListener('input', debounce(event => {
+      console.log('debounced: input fired, value is:', event.target.value);
+    }));
+
+    document.querySelector('#no-debounce').addEventListener('input', event => {
+      console.log('not debounced: input fired, value is:', event.target.value);
+    });
+  </script>
+</body>
+
+</html>

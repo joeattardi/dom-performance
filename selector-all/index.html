@@ -30,23 +30,23 @@
 </head>
 
 <body>
-  <h1>Selector Performance</h1>
-  <p>This compares two selectors that return the same elements, but one is more specific than the other.</p>
+  <h1><code>querySelector</code> vs <code>querySelectorAll</code></h1>
+  <p>This compares the performance of running the same query with <code>querySelector</code> and <code>querySelectorAll</code>.</p>
   <div class="benchmark">
     <h2>Selector Benchmark</h2>
     <ul>
       <li id="query1">
         <dl>
-          <dt>Selector</dt>
-          <dd><code>li *</code></dd>
+          <dt>Function</dt>
+          <dd><code>querySelector</code></dd>
           <dt>Queries per second</dt>
           <dd class="result"></dd>
         </dl>
       </li>
       <li id="query2">
         <dl>
-          <dt>Selector</dt>
-          <dd><code>li a</code></dd>
+          <dt>Function</dt>
+          <dd>querySelectorAll</dd>
           <dt>Queries per second</dt>
           <dd class="result"></dd>
         </dl>
@@ -113,7 +113,7 @@
   </div>
 
   <script>
-    function benchmarkSelector(selector, iterations = 1000) {
+    function benchmarkSelector(selector, all = false, iterations = 1000) {
       // Warm-up phase: query once to avoid initial load time affecting results
       document.querySelector(selector);
 
@@ -122,7 +122,11 @@
 
       // Run the selector multiple times
       for (let i = 0; i < iterations; i++) {
-        document.querySelector(selector);
+        if (all) {
+          document.querySelectorAll(selector);
+        } else {
+          document.querySelector(selector);
+        }
       }
 
       // End timing
@@ -133,8 +137,8 @@
       return new Intl.NumberFormat().format(Math.round(queriesPerSecond));
     }
 
-    document.querySelector('#query1 .result').textContent = benchmarkSelector('li *');
-    document.querySelector('#query2 .result').textContent = benchmarkSelector('li a');
+    document.querySelector('#query1 .result').textContent = benchmarkSelector('li a');
+    document.querySelector('#query2 .result').textContent = benchmarkSelector('li a', true);
   </script>
 </body>
 
